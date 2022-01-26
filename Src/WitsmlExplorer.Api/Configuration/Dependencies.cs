@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCore.AutoRegisterDi;
 using Serilog;
+using Witsml.Data;
 using WitsmlExplorer.Api.Models;
 using WitsmlExplorer.Api.Repositories;
 using WitsmlExplorer.Api.Services;
@@ -16,6 +17,7 @@ namespace WitsmlExplorer.Api.Configuration
     {
         public static void ConfigureDependencies(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<WitsmlClientCapabilities>(configuration.GetSection("Witsml:ClientCapabilities"));
             services.AddSingleton<ICredentialsService, CredentialsService>();
             services.AddScoped<IWitsmlClientProvider, WitsmlClientProvider>();
             AddRepository<Server, Guid>(services, configuration);
