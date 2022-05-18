@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Serilog;
-
 using Witsml.Data;
 using Witsml.ServiceReference;
 
@@ -50,7 +48,7 @@ namespace WitsmlExplorer.Api.Services
         {
             DateTime start = DateTime.Now;
             WitsmlWells witsmlWells = string.IsNullOrEmpty(wellUid) ? WellQueries.GetAllWitsmlWells() : WellQueries.GetWitsmlWellByUid(wellUid);
-            WitsmlWells result = await _witsmlClient.GetFromStoreAsync(witsmlWells, new OptionsIn(ReturnElements.All));
+            WitsmlWells result = await _witsmlClient.GetFromStoreAsync(witsmlWells, new OptionsIn(ReturnElements.Requested));
             List<Well> wells = result.Wells
                 .Select(well => new Well
                 {
